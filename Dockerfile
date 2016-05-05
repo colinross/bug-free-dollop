@@ -4,10 +4,9 @@ ENV USER colinross
 RUN useradd -m $USER
 RUN adduser $USER sudo
 
-# Update
+# System wide update
 RUN apt-get update && \
   apt-get upgrade -y
-
 
 # Zsh
 RUN apt-get install -y zsh && \
