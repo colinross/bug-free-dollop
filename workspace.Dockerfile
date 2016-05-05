@@ -1,6 +1,8 @@
 FROM ubuntu:latest
 
-ENV USER colinross
+ARG $USER
+ENV HOME /home/$USER
+
 RUN useradd -m $USER
 RUN adduser $USER sudo
 
