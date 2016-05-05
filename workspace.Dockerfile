@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ENV $USER=colinross
+ENV USER=colinross
 ENV HOME /home/$USER
 
 RUN useradd -m $USER
