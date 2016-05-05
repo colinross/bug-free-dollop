@@ -12,11 +12,9 @@ RUN apt-get update && \
 
 # Zsh
 RUN apt-get install -y zsh && \
-  git clone git://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh && \
+  git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh && \
   chsh --shell $(which zsh) && \
   zsh --version
-
-ADD configs/oh-my-zsh/zshrc /root/.zshrc
 
 # Basic Language Support
 ## Python
@@ -42,13 +40,13 @@ RUN gem install rake bundler sass && \
 # Install Rails
 RUN gem install rails
 
-USER $USER
-
 # Dotfiles
-RUN git clone https://github.com/colinross/dotfiles.git /home/$USER/.dotfiles \
-  && cd /home/$USER/.dotfiles && script/bootstrap
+RUN git clone https://github.com/colinross/dotfiles.git $HOME/.dotfiles \
+  && cd $HOME/.dotfiles && script/bootstrap
 
 VOLUME .:/app
+VOLUME .:$HOME
+
 EXPOSE 22
 EXPOSE 3000
 
