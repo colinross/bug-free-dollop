@@ -2,7 +2,7 @@ version: '2'
 services:
   workspace:
     container_name: workspace
-    build: .
+    build:
       context: .
       dockerfile: workspace.Dockerfile
     command: [bundle, exec, rails, s, -p, 3000, -b, '0.0.0.0']
