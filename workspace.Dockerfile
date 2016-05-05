@@ -1,4 +1,4 @@
-FROM ubantu:latest
+FROM ubuntu:latest
 
 ENV USER colinross
 RUN useradd -m $USER
