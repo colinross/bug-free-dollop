@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-ARG $USER
+#ARG $USER
 ENV HOME /home/$USER
 
 RUN useradd -m $USER
