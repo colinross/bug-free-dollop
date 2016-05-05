@@ -1,20 +1,16 @@
 version: '2'
 services:
-  workspace:
-    container_name: workspace
+  web:
     build:
       context: .
-      dockerfile: workspace.Dockerfile
-    command: [bundle, exec, rails, s, -p, '3000', -b, '0.0.0.0']
-    volumes:
-      - .:/myapp
+      dockerfile: web.Dockerfile
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:mysecretpassword@db/
+      - DATABASE_URL=postgresql://postgres:password@db/
   db:
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=password
