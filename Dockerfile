@@ -1,23 +1,15 @@
 FROM Ubantu:latest
 
-# ENV USER
-# ENV WORKING_PATH
+ENV USER colinross
+RUN useradd -m $USER
+RUN adduser $USER sudo
 
 # Update
 RUN apt-get update && \
   apt-get upgrade -y
 
 
-# Supervisor
-
-RUN apt-get install -y supervisor && \
-  mkdir -p /var/log/supervisor && \
-  supervisord --version
-
-ADD configs/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
-
 # Zsh
-
 RUN apt-get install -y zsh && \
   git clone git://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh && \
   chsh --shell $(which zsh) && \
@@ -26,13 +18,12 @@ RUN apt-get install -y zsh && \
 ADD configs/oh-my-zsh/zshrc /root/.zshrc
 
 # Basic Language Support
-
-# Python
+## Python
 RUN apt-get install -y python python3 python-pil pylint && \
 python --version && \
 python3 --version
 
-# Ruby
+## Ruby
 RUN apt-get install -y ruby ruby-dev ri && \
   ruby --version && \
   echo "Gem version:" && gem --version
@@ -40,6 +31,14 @@ RUN gem install rake bundler sass && \
   bundle --version && rake --version && sass --version && \
   gem install compass && \
   compass --version
+  
+USER $USER
+
+# Dotfiles
+RUN git clone https://github.com/colinross/dotfiles.git ~/.dotfiles \
+  cd ~/.dotfiles
+  script/bootstrap
+
 
 VOLUME /workspace
 EXPOSE 22
