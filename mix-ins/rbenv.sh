@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+RUBY_VERSION=${RUBY_VERSION:='2.3.1'}
+BUNDLER_VERSION=${BUNDLER_VERSION:='1.12'}
+RBENV_ROOT=${RBENV_ROOT:='/usr/local/rbenv'}
+
+git clone --depth=1 https://github.com/rbenv/rbenv.git ${RBENV_ROOT} && \
+git clone --depth=1 https://github.com/rbenv/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build && \
+${RBENV_ROOT}/plugins/ruby-build/install.sh && \
+export PATH=${RBENV_ROOT}/bin:${PATH} && \
+echo 'eval "$(rbenv init - zsh)"' >> /etc/zsh/zshrc && \
+eval "$(rbenv init -)" && \
+rbenv install ${RUBY_VERSION} && \
+rbenv global ${RUBY_VERSION} && \
+gem install bundler --version "${BUNDLER_VERSION}" && \
+bundle config install --no-rdoc --no-ri && \
+bundle config update --no-rdoc --no-ri

@@ -1,3 +1,3 @@
 FROM ruby:alpine
-ENV PACKAGES = "nodejs "
+RUN apk add nodejs
 RUN

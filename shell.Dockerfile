@@ -1,17 +1,17 @@
-FROM ruby-base
+FROM buildpack-deps
+MAINTAINER <Colin Ross colinross.github.io>
 
 RUN apk --no-cache add curl ctags the_silver_searcher tmux
 
-WORKDIR /root
+ENV PGDATA /var/lib/postgresql/data
 
-# Oh My Zsh
-RUN git clone git://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh && \
-    cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc
+COPY mix-ins/* /.docker/mix-ins/
+RUN chmod +x -R /.docker/mix-ins && \
+    find /.docker/ -name "*.sh" | xargs dos2unix && \
+    /.docker/mix-ins/runner.sh oh-my-zsh rbenv postgres
 
-RUN sed -i '/plugins/ s/git/=git rbenv bundle rake ruby tmux vi-mode common-aliases/' .zshrc && \
-    echo 'source /etc/zsh/zshrc' >> .zshrc
-
-WORKDIR /usr/src/app
+VOLUME /var/lib/postgresql/data
 VOLUME /usr/src/app
 
+WORKDIR /usr/src/app
 ENTRYPOINT ["zsh"]

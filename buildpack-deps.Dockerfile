@@ -1,4 +1,5 @@
-FROM alpine:latest
+FROM alpine
+MAINTAINER <Colin Ross colinross.github.io>
 
 RUN apk update && apk add --no-cache \
   autoconf \
@@ -28,15 +29,19 @@ RUN apk update && apk add --no-cache \
   linux-headers \
   make \
   mysql-client \
+  nodejs \
   ncurses-dev \
   openssl-dev \
   patch \
   postgresql-dev \
   readline-dev \
   sqlite-dev \
+  sudo \
   vim \
   wget \
   xz-dev \
   yaml-dev \
   zlib-dev \
   zsh
+
+ENTRYPOINT ["zsh"]
