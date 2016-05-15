@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+: ${OH_MY_ZSH_ROOT:=$HOME/.oh-my-zsh}
+
+git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_ROOT
+cp /root/.oh-my-zsh/templates/zshrc.zsh-template /etc/zsh/zshrc
+
+echo 'source /etc/zsh/zshrc' >> $HOME/.zshrc

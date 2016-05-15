@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+: ${PGDATA:=/var/lib/postgresql/data}
+
+apk --no-cache add \
+  g++ \
+  libpq \
+  make \
+  postgresql-dev \
+  sudo \
+
+mkdir -p $PGDATA
+chown -R postgres:postgres $(dirname $PGDATA)
+
+sudo -u postgres pg_ctl initdb -D $PGDATA
+sudo -u postgres pg_ctl start -D $PGDATA
